@@ -52,6 +52,12 @@ pushd $TEMP_DIR >/dev/null
 VMID=100
 info "Container ID is $VMID."
 
+for i in {0,1}; do
+  disk="DISK$i"
+  eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
+  eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
+done
+
 # Add serial port and enable console output
 set +o errtrace
 (
